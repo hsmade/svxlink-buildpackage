@@ -7,15 +7,19 @@ then
     shift 
 fi
 
-test -d /builds/hsmade/svxlink && mv /builds/hsmade/svxlink /svxlink
-test -d /svxlink/src || echo Either mount the source as /svxlink or give me a GIT url && exit 1
+test -d /builds/hsmade/svxlink && DIR=/builds/hsmade/svxlink || DIR=/svxlink
+if (! test -d $DIR/src)
+then
+  echo Either mount the source as /svxlink or give me a GIT url 
+  exit 1
+fi
 
 mkdir build
 cd build
 
 cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_SYSCONFDIR=/etc \
       -DCMAKE_INSTALL_LOCALSTATEDIR=/var \
-      -DCMAKE_BUILD_TYPE=Release /svxlink/src
+      -DCMAKE_BUILD_TYPE=Release $DIR/src
 make
 
 useradd -g daemon svxlink
