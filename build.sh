@@ -5,6 +5,7 @@ then
     shift 
 fi
 
+test -d /builds/hsmade/svxlink && mv /builds/hsmade/svxlink /svxlink
 test -d svxlink || (echo Either mount the source as /svxlink or give me a GIT url && exit 1)
 
 mkdir build
