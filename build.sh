@@ -26,5 +26,4 @@ useradd -g daemon svxlink
 
 checkinstall -D -y --pkgname svxlink --pkgversion $(date +%Y%m%d) --pkglicense GPLv3 \
              --addso --gzman $@
-mv -v *.deb /package/
-cp -v /package/*.deb /package/out.deb
+cp -v *.deb /package/
