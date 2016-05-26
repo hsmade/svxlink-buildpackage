@@ -9,5 +9,5 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 
 COPY build.sh /
-ENTRYPOINT ["/build.sh"]
+CMD ["/build.sh"]
 VOLUME /package
