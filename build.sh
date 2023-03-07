@@ -1,27 +1,14 @@
 #!/bin/bash
-cd /
-
-if ([ -n "$1" ] && echo "$1" |egrep -q https?://)
-then
-    git clone "$1" svxlink || exit 1
-    shift 
-fi
-
-test -d /builds/hsmade/svxlink && DIR=/builds/hsmade/svxlink || DIR=/svxlink
-if (! test -d $DIR/src)
-then
-  echo Either mount the source as /svxlink or give me a GIT url 
-  exit 1
-fi
-
-mkdir build
+cd /svxlink/src
+mkdir -p build
 cd build
 
 cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_SYSCONFDIR=/etc \
       -DCMAKE_INSTALL_LOCALSTATEDIR=/var \
-      -DCMAKE_BUILD_TYPE=Release $DIR/src
+      -DCMAKE_BUILD_TYPE=Release -DUSE_QT=NO ..
 make
 
+groupadd svxlink
 useradd -g daemon svxlink
 
 checkinstall -D -y --pkgname svxlink --pkgversion $(date +%Y%m%d) --pkglicense GPLv3 \
